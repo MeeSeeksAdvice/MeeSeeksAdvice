@@ -1,5 +1,6 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Question;
 import com.theironyard.entities.User;
 import com.theironyard.services.QuestionRepository;
 import com.theironyard.services.UserRepository;
@@ -35,11 +36,17 @@ Server dbui = null;
 
     @RequestMapping(path = "/user", method = RequestMethod.POST)
     public void addUser(@RequestBody User user){
-            users.save(user);
+        users.save(user);
 
-        }
-    @RequestMapping(path = "user", method = RequestMethod.GET)
+    }
+    @RequestMapping(path = "/user", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") int id){
         return users.findOne(id);
+    }
+
+    @RequestMapping(path = "/question", method = RequestMethod.POST)
+    public void addQuestion(@RequestBody Question question){
+        questions.save(question);
+
     }
 }
