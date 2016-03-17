@@ -1,10 +1,11 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.User;
 import com.theironyard.services.QuestionRepository;
 import com.theironyard.services.UserRepository;
 import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -30,5 +31,15 @@ Server dbui = null;
     @PreDestroy
     public void destory(){
         dbui.stop();
+    }
+
+    @RequestMapping(path = "/user", method = RequestMethod.POST)
+    public void addUser(@RequestBody User user){
+            users.save(user);
+
+        }
+    @RequestMapping(path = "user", method = RequestMethod.GET)
+    public User getUser(@PathVariable("id") int id){
+        return users.findOne(id);
     }
 }
