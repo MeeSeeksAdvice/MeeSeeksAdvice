@@ -38,7 +38,7 @@ Server dbui = null;
             users.save(user);
 
         }
-    @RequestMapping(path = "user", method = RequestMethod.GET)
+    @RequestMapping(path = "/user", method = RequestMethod.GET)
     public User getUser(@PathVariable("id") int id){
         return users.findOne(id);
     }
