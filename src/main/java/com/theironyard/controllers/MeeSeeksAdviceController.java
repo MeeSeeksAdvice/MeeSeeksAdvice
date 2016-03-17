@@ -49,4 +49,13 @@ Server dbui = null;
         questions.save(question);
 
     }
+    @RequestMapping(path = "/question/{id}", method = RequestMethod.PUT)
+    public void editQuestion(@RequestBody Question question) {
+        questions.save(question);
+    }
+
+    @RequestMapping(path = "/question/{id}", method = RequestMethod.DELETE)
+    public void  deleteQuestion(@PathVariable("id") int id) {
+        questions.delete(id);
+    }
 }
