@@ -1,20 +1,23 @@
 var Backbone = require ('backbone');
 var _ = require('underscore');
 var tmpl = require('./templates');
-var QuestionModel = require ('./questionModel');
+var $ = require('jquery');
+var QuestionModelView= require ('./questionModelView');
 
 module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
-      this.addAll();
-      this.listenTo(this.collection, 'update', this.addAll);
+    this.addAll();
+    this.listenTo(this.collection, 'update', this.addAll);
   },
   addOne: function (model) {
-    var modelView = new QuestionModel({model: model});
-    this.$el.append(modelView.render());
+    var modelView = new QuestionModelView({model: model});
+    console.log('test', modelView);
+    this.$el.append(modelView.render().el);
   },
   addAll: function () {
-    this.$el.html('');
-    _.each (this.collection.models, this.addOne, this);
+    _.each(this.collection.models, this.addOne, this);
+    console.log('what am i',this.$el)
+    window.glob = this;
   }
 });
