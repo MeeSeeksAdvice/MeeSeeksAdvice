@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by ericweidman on 3/17/16.
@@ -29,11 +32,22 @@ public class MeeSeeksAdviceController {
     AnswerRepository answers;
 
 
-    Server dbui = null;
+
+Server dbui = null;
 
     @PostConstruct
-    public void init() throws SQLException {
+    public void init() throws SQLException, FileNotFoundException {
         dbui = Server.createWebServer().start();
+
+        if (answers.count() == 0) {
+            File f = new File("answers.csv");
+            Scanner scanner = new Scanner(f);
+            while (scanner.hasNext()) {
+                String line = scanner.nextLine();
+                Answer answer = new Answer(line);
+                answers.save(answer);
+            }
+        }
     }
 
     @PreDestroy
