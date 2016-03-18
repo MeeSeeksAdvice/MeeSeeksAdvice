@@ -15,6 +15,7 @@ module.exports = Backbone.View.extend ({
     this.model.set({
         question: this.$el.find('.question-input').val(),
     });
+    console.log('HI',this.model);
     this.model.save();
     this.model = new QuestionModel({});
   },
