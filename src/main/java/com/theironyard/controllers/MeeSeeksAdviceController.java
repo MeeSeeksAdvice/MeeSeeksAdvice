@@ -50,23 +50,18 @@ Server dbui = null;
         return (List<User>) users.findAll();
     }
 
-    @RequestMapping(path = "/question", method = RequestMethod.POST)
-    public void addQuestion(HttpSession session, String question, User user){
-        String userName = (String) session.getAttribute("userName");
-        if (userName != null) {
-            Question q = new Question(user, question);
-            questions.save(q);
-        }
+    @RequestMapping(path = "/question/{id}", method = RequestMethod.POST)
+    public void addQuestion(@RequestBody Question question){
+        questions.save(question);
+
     }
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
     public void editQuestion(@RequestBody Question question) {
         questions.save(question);
     }
-
     @RequestMapping(path = "/question/{id}", method = RequestMethod.GET)
     public Question getQuestion(@PathVariable("id") int id) {
-            return questions.findOne(id);
-
+        return questions.findOne(id);
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.GET)
