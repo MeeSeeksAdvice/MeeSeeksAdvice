@@ -1,6 +1,7 @@
 body {
   background-image: url("../images/meeseeks.png");
   background-position-x: 163%;
+  background-repeat: no-repeat;
   font-family: 'Montserrat', sans-serif; }
 
 .inactive {
