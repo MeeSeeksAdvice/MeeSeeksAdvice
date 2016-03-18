@@ -18,11 +18,11 @@ module.exports = Backbone.View.extend({
     this.model.save();
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
+    $('.advice-page').removeClass('inactive');
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
-    console.log ("initialize is working!");
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
