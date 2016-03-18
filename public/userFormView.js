@@ -1,6 +1,7 @@
 var Backbone = require('backbone');
 var tmpl = require('./templates');
 var _ = require('underscore');
+var $ = require ('jquery');
 var UserModel = require ('./userModel');
 
 module.exports = Backbone.View.extend({
@@ -11,17 +12,16 @@ module.exports = Backbone.View.extend({
   },
   submitUsername: function (event) {
     event.preventDefault();
-    console.log ("clicky?");
     this.model.set({
       userName: this.$el.find('.user-login-input').val(),
     });
     this.model.save();
     this.model = new UserModel ({});
+    $('.login-in-page').addClass('inactive');
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
-
     console.log ("initialize is working!");
   },
   render: function () {

@@ -13329,8 +13329,8 @@ return jQuery;
 module.exports = {
   userFormTmpl : [
     '<form class="user-login-form">',
-    '<input type="text" name="username" class="user-login-input" value="Enter Username">',
-    '<button type="button" class ="user-login-button" name="button">SUBMIT</button>',
+    '<input type="text" name="username" class="user-login-input form-control" placeholder = "Enter Username"value="">',
+    '<button type="button" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
     '</form>'
   ].join(""),
 };
@@ -13339,6 +13339,7 @@ module.exports = {
 var Backbone = require('backbone');
 var tmpl = require('./templates');
 var _ = require('underscore');
+var $ = require ('jquery');
 var UserModel = require ('./userModel');
 
 module.exports = Backbone.View.extend({
@@ -13349,17 +13350,16 @@ module.exports = Backbone.View.extend({
   },
   submitUsername: function (event) {
     event.preventDefault();
-    console.log ("clicky?");
     this.model.set({
       userName: this.$el.find('.user-login-input').val(),
     });
     this.model.save();
     this.model = new UserModel ({});
+    $('.login-in-page').addClass('inactive');
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
-
     console.log ("initialize is working!");
   },
   render: function () {
@@ -13370,7 +13370,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"./templates":5,"./userModel":7,"backbone":2,"underscore":4}],7:[function(require,module,exports){
+},{"./templates":5,"./userModel":7,"backbone":2,"jquery":3,"underscore":4}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend({
   urlRoot: '/user',
