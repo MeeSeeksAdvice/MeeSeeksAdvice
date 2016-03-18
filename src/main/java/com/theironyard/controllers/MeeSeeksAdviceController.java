@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -50,8 +51,13 @@ Server dbui = null;
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.POST)
-    public void addQuestion(@RequestBody Question question){
-        questions.save(question);
+    public void addQuestion(HttpSession session, String question, User user){
+        String userName = (String) session.getAttribute("userName");
+        if (userName != null) {
+            Question q = new Question(user, question);
+            questions.save(q);
+        }
+
 
     }
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
