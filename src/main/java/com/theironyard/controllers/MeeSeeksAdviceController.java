@@ -27,6 +27,7 @@ public class MeeSeeksAdviceController {
     @Autowired
     AnswerRepository answers;
 
+
 Server dbui = null;
 
     @PostConstruct
@@ -73,7 +74,9 @@ Server dbui = null;
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
     public void editQuestion(@RequestBody Question question) {
         questions.save(question);
+
     }
+
     @RequestMapping(path = "/question/{id}", method = RequestMethod.GET)
     public Question getQuestion(@PathVariable("id") int id) {
         return questions.findOne(id);
