@@ -13446,7 +13446,9 @@ module.exports = {
   ].join(""),
 
   questionDisplay: [
+    // '<div id = "<%= userName %>"',
     '<h3 class="question-display"><%= question %></h3>',
+    // '</div>'
   ].join(""),
 };
 
