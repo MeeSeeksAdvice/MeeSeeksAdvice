@@ -51,7 +51,7 @@ Server dbui = null;
     }
 
     @PreDestroy
-    public void destory(){
+    public void destory() {
         dbui.stop();
     }
 
