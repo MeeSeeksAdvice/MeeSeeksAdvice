@@ -57,7 +57,6 @@ Server dbui = null;
             Question q = new Question(user, question);
             questions.save(q);
         }
-
     }
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
     public void editQuestion(@RequestBody Question question) {
