@@ -1,2 +1,28 @@
 body {
-  background-color: pink; }
+  background-image: url("../images/meeseeks.png");
+  background-position-x: 163%;
+  font-family: 'Montserrat', sans-serif; }
+
+.inactive {
+  display: none; }
+
+.login-in-page {
+  margin: 192px auto;
+  width: 50%; }
+  .login-in-page h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #FF9933; }
+
+.user-login-form {
+  width: 75%;
+  margin: 0 auto; }
+
+.user-login-form input {
+  width: 100%; }
+
+.user-login-button {
+  width: 27%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px; }
