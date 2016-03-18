@@ -85,4 +85,9 @@ Server dbui = null;
     public void  deleteQuestion(@PathVariable("id") int id) {
         questions.delete(id);
     }
+    @RequestMapping(path = "/logout", method = RequestMethod.POST)
+    public void logout(HttpSession session){
+        session.invalidate();
+    }
+
 }
