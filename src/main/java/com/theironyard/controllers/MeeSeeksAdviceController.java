@@ -2,6 +2,7 @@ package com.theironyard.controllers;
 
 import com.theironyard.entities.Question;
 import com.theironyard.entities.User;
+import com.theironyard.services.AnswerRepository;
 import com.theironyard.services.QuestionRepository;
 import com.theironyard.services.UserRepository;
 import org.h2.tools.Server;
@@ -23,6 +24,8 @@ public class MeeSeeksAdviceController {
     UserRepository users;
     @Autowired
     QuestionRepository questions;
+    @Autowired
+    AnswerRepository answers;
 
 Server dbui = null;
 
@@ -85,9 +88,9 @@ Server dbui = null;
     public void  deleteQuestion(@PathVariable("id") int id) {
         questions.delete(id);
     }
+
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
-    public void logout(HttpSession session){
+    public void logout(HttpSession session) {
         session.invalidate();
     }
-
 }
