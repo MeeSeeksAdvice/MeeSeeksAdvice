@@ -15,6 +15,6 @@ module.exports = {
   ].join(""),
 
   questionDisplay: [
-    '<h3 class= "question-display"><%= question %></h3>',
+    '<h3 class="question-display"><%= question %></h3>',
   ].join(""),
 };
