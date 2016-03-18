@@ -20,10 +20,14 @@ public class Question {
     @ManyToOne
     User user;
 
+    @ManyToOne
+    Answer answer;
+
     public Question() {
     }
 
-    public Question(User user, String question) {
+    public Question(Answer answer, User user, String question) {
+        this.answer = answer;
         this.user = user;
         this.question = question;
     }
@@ -50,5 +54,13 @@ public class Question {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Answer getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 }
