@@ -1,13 +1,15 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Backbone = require('backbone');
-var UserFormView = require ('./userFormView');
 var $ = require ('jquery');
+var UserFormView = require ('./userFormView');
+var QuestionForm = require ('./questionFormView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
+  var addQuestionForm = new QuestionForm();
 });
 
-},{"./userFormView":6,"backbone":2,"jquery":3}],2:[function(require,module,exports){
+},{"./questionFormView":5,"./userFormView":8,"backbone":2,"jquery":3}],2:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.2
 
@@ -13326,19 +13328,73 @@ return jQuery;
 }.call(this));
 
 },{}],5:[function(require,module,exports){
+var Backbone = require ('backbone');
+var tmpl = require ('./templates');
+var _ = require ('underscore');
+var $ = require ('jquery');
+var QuestionModel = require ('./questionModel');
+
+module.exports = Backbone.View.extend ({
+  el: '.question-container',
+  template: _.template(tmpl.questionForm),
+  events: {
+    'click .question-button' : 'submitQuestion'
+  },
+  submitQuestion: function (event) {
+    event.preventDefault();
+    this.model.set({
+        question: this.$el.find('.question-input').val(),
+    });
+    this.model.save();
+    this.model = new QuestionModel({});
+  },
+  initialize: function () {
+    this.model = new QuestionModel ({});
+    this.render();
+  },
+  render: function () {
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  }
+});
+
+},{"./questionModel":6,"./templates":7,"backbone":2,"jquery":3,"underscore":4}],6:[function(require,module,exports){
+var Backbone = require('backbone');
+module.exports = Backbone.Model.extend ({
+  urlRoot: '/question',
+  initialize: function () {
+    console.log("questionModel created!");
+  }
+});
+
+},{"backbone":2}],7:[function(require,module,exports){
 module.exports = {
   userFormTmpl : [
     '<form class="user-login-form">',
-    '<input type="text" name="username" class="user-login-input" value="Enter Username">',
-    '<button type="button" class ="user-login-button" name="button">SUBMIT</button>',
+    '<input type="text" name="username" class="user-login-input form-control" placeholder = "Enter Username"value="">',
+    '<button type="button" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
     '</form>'
+  ].join(""),
+
+  questionForm : [
+    '<form class="question-form">',
+        "<h3>What's your question for Meseeks?</h3>",
+        '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
+        '<button type="button" name="" class = "question-button">Submit</button>',
+    '</form>'
+  ].join(""),
+
+  questionDisplay: [
+    '<h3 class= "question-display"><%= question %></h3>',
   ].join(""),
 };
 
-},{}],6:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var Backbone = require('backbone');
 var tmpl = require('./templates');
 var _ = require('underscore');
+var $ = require ('jquery');
 var UserModel = require ('./userModel');
 
 module.exports = Backbone.View.extend({
@@ -13349,18 +13405,17 @@ module.exports = Backbone.View.extend({
   },
   submitUsername: function (event) {
     event.preventDefault();
-    console.log ("clicky?");
     this.model.set({
       userName: this.$el.find('.user-login-input').val(),
     });
     this.model.save();
     this.model = new UserModel ({});
+    $('.login-in-page').addClass('inactive');
+    $('.advice-page').removeClass('inactive');
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
-
-    console.log ("initialize is working!");
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
@@ -13370,7 +13425,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"./templates":5,"./userModel":7,"backbone":2,"underscore":4}],7:[function(require,module,exports){
+},{"./templates":7,"./userModel":9,"backbone":2,"jquery":3,"underscore":4}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend({
   urlRoot: '/user',
