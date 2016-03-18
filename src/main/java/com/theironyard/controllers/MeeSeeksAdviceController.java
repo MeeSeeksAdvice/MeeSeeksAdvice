@@ -31,8 +31,6 @@ public class MeeSeeksAdviceController {
     @Autowired
     AnswerRepository answers;
 
-
-
 Server dbui = null;
 
     @PostConstruct
