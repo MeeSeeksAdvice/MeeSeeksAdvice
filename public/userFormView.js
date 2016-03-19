@@ -8,7 +8,7 @@ module.exports = Backbone.View.extend({
   el: '.login-container',
   template: _.template(tmpl.userFormTmpl),
   events: {
-    'click .user-login-button' : 'submitUsername'
+    'submit .user-login-form' : 'submitUsername'
   },
   submitUsername: function (event) {
     event.preventDefault();
