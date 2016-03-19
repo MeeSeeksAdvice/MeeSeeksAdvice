@@ -27,3 +27,12 @@ body {
   margin: 0 auto;
   display: block;
   margin-top: 15px; }
+
+.username-display {
+  display: inline-block;
+  text-transform: uppercase;
+  color: lightgrey;
+  margin-right: 10px; }
+
+.question-display {
+  display: inline-block; }
