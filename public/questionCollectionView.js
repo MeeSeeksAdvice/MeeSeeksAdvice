@@ -13,11 +13,11 @@ module.exports = Backbone.View.extend({
   addOne: function (model) {
     var modelView = new QuestionModelView({model: model});
     console.log('test', modelView);
+    userName = modelView.model.attributes.user.userName;
     this.$el.append(modelView.render().el);
   },
   addAll: function () {
     _.each(this.collection.models, this.addOne, this);
-    console.log('what am i',this.$el)
-    window.glob = this;
+    console.log('what am i',this.$el);
   }
 });

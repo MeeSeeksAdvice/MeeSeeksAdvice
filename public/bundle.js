@@ -4,7 +4,7 @@ var $ = require ('jquery');
 var UserFormView = require ('./userFormView');
 var QuestionForm = require ('./questionFormView');
 var QuestionCollection = require ('./questionCollection');
-var QuestionCollectionView = require ('./questionCollectionView')
+var QuestionCollectionView = require ('./questionCollectionView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
@@ -13359,12 +13359,12 @@ module.exports = Backbone.View.extend({
   addOne: function (model) {
     var modelView = new QuestionModelView({model: model});
     console.log('test', modelView);
+    userName = modelView.model.attributes.user.userName;
     this.$el.append(modelView.render().el);
   },
   addAll: function () {
     _.each(this.collection.models, this.addOne, this);
-    console.log('what am i',this.$el)
-    window.glob = this;
+    console.log('what am i',this.$el);
   }
 });
 
@@ -13419,7 +13419,7 @@ module.exports = Backbone.View.extend ({
   tagName: 'article',
   template: _.template(tmpl.questionDisplay),
   intialize: function () {
-    // this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'change', this.render);
   },
   render:function () {
     var markup = this.template(this.model.toJSON());
@@ -13446,9 +13446,9 @@ module.exports = {
   ].join(""),
 
   questionDisplay: [
-    // '<div id = "<%= userName %>"',
+    '<div id = "<%= userName %>"',
     '<h3 class="question-display"><%= question %></h3>',
-    // '</div>'
+    '</div>'
   ].join(""),
 };
 
