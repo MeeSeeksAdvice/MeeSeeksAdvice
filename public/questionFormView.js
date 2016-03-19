@@ -9,7 +9,7 @@ module.exports = Backbone.View.extend ({
   el: '.question-container',
   template: _.template(tmpl.questionForm),
   events: {
-    'click .question-button' : 'submitQuestion'
+    'submit .question-form' : 'submitQuestion'
   },
   submitQuestion: function (event) {
     event.preventDefault();
@@ -17,6 +17,7 @@ module.exports = Backbone.View.extend ({
         question: this.$el.find('.question-input').val(),
     });
     this.model.save();
+    this.collection.add(this.model);
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
   },
