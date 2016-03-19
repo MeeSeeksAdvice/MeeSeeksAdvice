@@ -1,22 +1,113 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var Backbone = require ('backbone');
+var _ = require('underscore');
+var tmpl = require('./templates');
+var $ = require('jquery');
+var AnswerModelView= require ('./answerModelView');
+
+module.exports = Backbone.View.extend({
+  el: '.answer-display-container',
+  initialize: function () {
+    this.addAll();
+    this.listenTo(this.collection, 'update', this.addAll);
+  },
+  addOne: function (model) {
+    var modelView = new AnswerModelView({model: model});
+    this.$el.append(modelView.render().el);
+  },
+  addAll: function () {
+    _.each(this.collection.models, this.addOne, this);
+  }
+});
+
+},{"./answerModelView":4,"./templates":15,"backbone":7,"jquery":8,"underscore":9}],2:[function(require,module,exports){
+var Backbone = require ('backbone');
+module.exports = Backbone.Collection.extend ({
+  url: '/answer',
+  initialize: function () {
+    console.log ("Answer collection created.");
+  }
+});
+
+},{"backbone":7}],3:[function(require,module,exports){
+var Backbone = require('backbone');
+
+module.exports = Backbone.Model.extend ({
+  urlRoot: '/answer',
+  initialize: function () {
+    console.log("Answer model created!");
+  }
+});
+
+},{"backbone":7}],4:[function(require,module,exports){
+var Backbone = require ('backbone');
+var _ = require ('underscore');
+var tmpl = require('./templates');
+
+module.exports = Backbone.View.extend ({
+  tagName: 'article',
+  template: _.template(tmpl.answerDisplay),
+  intialize: function () {
+    this.listenTo(this.model, 'change', this.render);
+  },
+  render:function () {
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  }
+});
+
+},{"./templates":15,"backbone":7,"underscore":9}],5:[function(require,module,exports){
+var Backbone = require ('backbone');
+var tmpl = require ('./templates');
+var _ = require ('underscore');
+var $ = require ('jquery');
+var AnswerModel = require ('./answerModel');
+
+module.exports = Backbone.View.extend({
+el: '.answer-display-container',
+template: _.template(tmpl.answerDisplay),
+events: {
+  'click .question-button' : 'addAnswer'
+},
+addAnswer: function (event) {
+  event.preventDefault();
+  this.model = new AnswerModel({});
+  console.log ("answerSubmitView//line18", this.model);
+},
+initialize: function() {
+  this.model = new AnswerModel ({});
+  this.render();
+},
+});
+
+},{"./answerModel":3,"./templates":15,"backbone":7,"jquery":8,"underscore":9}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 var $ = require ('jquery');
 var UserFormView = require ('./userFormView');
 var QuestionForm = require ('./questionFormView');
 var QuestionCollection = require ('./questionCollection');
-var QuestionCollectionView = require ('./questionCollectionView')
+var QuestionCollectionView = require ('./questionCollectionView');
+var AnswerCollection = require ('./answerCollection');
+var AnswerCollectionView = require ('./AnswerCollectionView');
+var AnswerSubmitView = require ('./answerSubmitView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
   var addQuestionForm = new QuestionForm();
   var questioncollection = new QuestionCollection();
-  // new QuestionCollectionView({})
-    questioncollection.fetch().then(function(data){
+  var answersubmitview = new AnswerSubmitView();
+  questioncollection.fetch().then(function(data){
       var postMarkUp = new QuestionCollectionView({collection : questioncollection});
     });
+  var answercollection = new AnswerCollection();
+  console.log('answer collection = ',answercollection);
+  answercollection.fetch().then(function(data){
+      var postMarkUp2 = new AnswerCollectionView({collection : answercollection});
+  });
 });
 
-},{"./questionCollection":5,"./questionCollectionView":6,"./questionFormView":7,"./userFormView":11,"backbone":2,"jquery":3}],2:[function(require,module,exports){
+},{"./AnswerCollectionView":1,"./answerCollection":2,"./answerSubmitView":5,"./questionCollection":10,"./questionCollectionView":11,"./questionFormView":12,"./userFormView":16,"backbone":7,"jquery":8}],7:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.2
 
@@ -1940,7 +2031,7 @@ $(document).ready(function () {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":3,"underscore":4}],3:[function(require,module,exports){
+},{"jquery":8,"underscore":9}],8:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
@@ -11784,7 +11875,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13334,21 +13425,21 @@ return jQuery;
   }
 }.call(this));
 
-},{}],5:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var Backbone = require ('backbone');
 module.exports = Backbone.Collection.extend ({
   url: '/question',
   initialize: function () {
-    console.log ("Question collection created.");
   }
 });
 
-},{"backbone":2}],6:[function(require,module,exports){
+},{"backbone":7}],11:[function(require,module,exports){
 var Backbone = require ('backbone');
 var _ = require('underscore');
 var tmpl = require('./templates');
 var $ = require('jquery');
 var QuestionModelView= require ('./questionModelView');
+var AnswerModelView = require ('./answerModelView');
 
 module.exports = Backbone.View.extend({
   el: '.question-display-container',
@@ -13358,22 +13449,21 @@ module.exports = Backbone.View.extend({
   },
   addOne: function (model) {
     var modelView = new QuestionModelView({model: model});
-    console.log('test', modelView);
+    userName = modelView.model.attributes.user.userName;
     this.$el.append(modelView.render().el);
   },
   addAll: function () {
     _.each(this.collection.models, this.addOne, this);
-    console.log('what am i',this.$el)
-    window.glob = this;
   }
 });
 
-},{"./questionModelView":9,"./templates":10,"backbone":2,"jquery":3,"underscore":4}],7:[function(require,module,exports){
+},{"./answerModelView":4,"./questionModelView":14,"./templates":15,"backbone":7,"jquery":8,"underscore":9}],12:[function(require,module,exports){
 var Backbone = require ('backbone');
 var tmpl = require ('./templates');
 var _ = require ('underscore');
 var $ = require ('jquery');
 var QuestionModel = require ('./questionModel');
+var AnswerModel = require ('./answerModel');
 
 module.exports = Backbone.View.extend ({
   el: '.question-container',
@@ -13401,16 +13491,16 @@ module.exports = Backbone.View.extend ({
   }
 });
 
-},{"./questionModel":8,"./templates":10,"backbone":2,"jquery":3,"underscore":4}],8:[function(require,module,exports){
+},{"./answerModel":3,"./questionModel":13,"./templates":15,"backbone":7,"jquery":8,"underscore":9}],13:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend ({
   urlRoot: '/question',
   initialize: function () {
-    console.log("questionModel created!");
+    console.log("question model created!");
   }
 });
 
-},{"backbone":2}],9:[function(require,module,exports){
+},{"backbone":7}],14:[function(require,module,exports){
 var Backbone = require ('backbone');
 var _ = require ('underscore');
 var tmpl = require('./templates');
@@ -13419,7 +13509,7 @@ module.exports = Backbone.View.extend ({
   tagName: 'article',
   template: _.template(tmpl.questionDisplay),
   intialize: function () {
-    // this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'change', this.render);
   },
   render:function () {
     var markup = this.template(this.model.toJSON());
@@ -13428,12 +13518,12 @@ module.exports = Backbone.View.extend ({
   }
 });
 
-},{"./templates":10,"backbone":2,"underscore":4}],10:[function(require,module,exports){
+},{"./templates":15,"backbone":7,"underscore":9}],15:[function(require,module,exports){
 module.exports = {
   userFormTmpl : [
     '<form class="user-login-form">',
-    '<input type="text" name="username" class="user-login-input form-control" placeholder = "Enter Username"value="">',
-    '<button type="button" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
+        '<input type="text" name="username" class="user-login-input form-control" placeholder = "Enter Username"value="">',
+        '<button type="button" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
     '</form>'
   ].join(""),
 
@@ -13446,13 +13536,20 @@ module.exports = {
   ].join(""),
 
   questionDisplay: [
-    // '<div id = "<%= userName %>"',
-    '<h3 class="question-display"><%= question %></h3>',
-    // '</div>'
+    '<div id = <%= userName %>>',
+        '<h4 class="username-display"><%= userName %></h4>',
+        '<h3 class="question-display"><%= question %></h3>',
+    '</div>'
   ].join(""),
+
+  answerDisplay: [
+    // '<div data-id = <%= userName %>>',
+        '<h4 class="username-display"><%= answer %></h4>',
+    // '</div>'
+  ].join("")
 };
 
-},{}],11:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 var Backbone = require('backbone');
 var tmpl = require('./templates');
 var _ = require('underscore');
@@ -13487,13 +13584,12 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"./templates":10,"./userModel":12,"backbone":2,"jquery":3,"underscore":4}],12:[function(require,module,exports){
+},{"./templates":15,"./userModel":17,"backbone":7,"jquery":8,"underscore":9}],17:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend({
   urlRoot: '/user',
   initialize: function () {
-    console.log("user model has been created.");
   }
 });
 
-},{"backbone":2}]},{},[1]);
+},{"backbone":7}]},{},[6]);

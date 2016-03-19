@@ -1,7 +1,8 @@
 var Backbone = require('backbone');
+
 module.exports = Backbone.Model.extend ({
-  urlRoot: '/question',
+  urlRoot: '/answer',
   initialize: function () {
-    console.log("question model created!");
+    console.log("Answer model created!");
   }
 });
