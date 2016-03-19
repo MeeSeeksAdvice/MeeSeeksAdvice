@@ -98,8 +98,9 @@ Server dbui = null;
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.GET)
-    public List<Question> getQuestions() {
-        return (List<Question>) questions.findAll();
+    public List<Question> getQuestions(HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        return (List<Question>) questions.findByUserName(userName);
     }
 
     @RequestMapping(path = "/question/{id}", method = RequestMethod.DELETE)
