@@ -6,7 +6,7 @@ module.exports = Backbone.View.extend ({
   tagName: 'article',
   template: _.template(tmpl.questionDisplay),
   intialize: function () {
-    // this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'change', this.render);
   },
   render:function () {
     var markup = this.template(this.model.toJSON());
