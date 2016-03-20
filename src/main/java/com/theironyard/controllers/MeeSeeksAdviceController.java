@@ -101,7 +101,11 @@ Server dbui = null;
 
     @RequestMapping(path = "/question", method = RequestMethod.GET)
     public List<Question> getQuestions() {
-        return (List<Question>) questions.findAll();
+        List<Question> localQuestions = (List<Question>) questions.findAll();
+        for (Question question : localQuestions) {
+            question.setAnswer(answer());
+        }
+        return localQuestions;
 
     }
 
