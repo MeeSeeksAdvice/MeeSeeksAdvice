@@ -18,7 +18,14 @@ module.exports = Backbone.View.extend({
       this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
-    this.$el.html('');
+    if ($(".questionDisplay").contains("'.user-login-input'")){
+      this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
+  },
+
+
+  //   this.$el.html('');
+  //   _.each(this.collection.models, this.addOne, this);
+  // },
   }
 });
