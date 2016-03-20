@@ -8,6 +8,7 @@ module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
     this.addAll();
+  
     this.listenTo(this.collection, 'update', this.addAll);
     this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'add', this.addAll);
@@ -18,14 +19,9 @@ module.exports = Backbone.View.extend({
       this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
-    if ($(".questionDisplay").contains("'.user-login-input'")){
       this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
   },
 
 
-  //   this.$el.html('');
-  //   _.each(this.collection.models, this.addOne, this);
-  // },
-  }
 });

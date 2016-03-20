@@ -10,9 +10,8 @@ $(document).ready(function () {
   var questioncollection = new QuestionCollection();
   questioncollection.fetch().then(function(data){
     console.log("QUESTSIONS", data);
-    // if ($('.questionDisplay').attr('id') === userName) {
       var postMarkUp = new QuestionCollectionView({collection : questioncollection});
       var addQuestionForm = new QuestionForm({collection: questioncollection});
-    // },
+    // }
     });
 });

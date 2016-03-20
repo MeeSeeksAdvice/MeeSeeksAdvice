@@ -11,10 +11,9 @@ $(document).ready(function () {
   var questioncollection = new QuestionCollection();
   questioncollection.fetch().then(function(data){
     console.log("QUESTSIONS", data);
-    // if ($('.questionDisplay').attr('id') === userName) {
       var postMarkUp = new QuestionCollectionView({collection : questioncollection});
       var addQuestionForm = new QuestionForm({collection: questioncollection});
-    // },
+    // }
     });
 });
 
@@ -13355,6 +13354,7 @@ module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
     this.addAll();
+  
     this.listenTo(this.collection, 'update', this.addAll);
     this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'add', this.addAll);
@@ -13365,9 +13365,11 @@ module.exports = Backbone.View.extend({
       this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
-    this.$el.html('');
+      this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
-  }
+  },
+
+
 });
 
 },{"./questionModelView":9,"./templates":10,"backbone":2,"jquery":3,"underscore":4}],7:[function(require,module,exports){
@@ -13387,8 +13389,10 @@ module.exports = Backbone.View.extend ({
     event.preventDefault();
     this.model.set({
         question: this.$el.find('.question-input').val(),
+
     });
     this.model.save();
+    window.glob = this.model;
     this.collection.add(this.model);
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
@@ -13465,20 +13469,20 @@ module.exports = {
 
   questionForm : [
     '<form class="question-form">',
-        "<h3>What's your question for Meeseeks?</h3>",
+        "<h3>What's your question for Mr. Meeseeks?</h3>",
         '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
         '<button type="submit" name="" class="question-button">Submit</button>',
     '</form>'
   ].join(""),
 
   questionDisplay: [
-    '<div class = "questionDisplay" >',
+    '<section class = "questionDisplay" id = <%= user.userName %> =  >',
         '<h4 class="username-display"><%= user.userName %></h4>',
         '<h3 class="question-display"><%= question %></h3>',
         '<h3 class="answer-display"><%= answer.answer %></h3>',
         '<button class = "delete-button">DELETE</button>',
         '<button class = "edit-button">EDIT</button>',
-    '</div>'
+    '</section>'
   ].join(""),
 
   editPost: [
@@ -13512,10 +13516,16 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
+    // this.hide();
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
+  },
+  hide: function () {
+    var userName = this.$el.find('.user-login-input').val();
+    $('.question-display-container').hide();
+    $('.question-display-container').find('#' + userName);
   },
   render: function () {
     var markup = this.template(this.model.toJSON());

@@ -19,10 +19,16 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
+    // this.hide();
   },
   initialize: function () {
     this.model = new UserModel({});
     this.render();
+  },
+  hide: function () {
+    var userName = this.$el.find('.user-login-input').val();
+    $('.question-display-container').hide();
+    $('.question-display-container').find('#' + userName);
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
