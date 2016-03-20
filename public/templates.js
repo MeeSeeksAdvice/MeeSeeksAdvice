@@ -18,12 +18,17 @@ module.exports = {
     '<div class = "questionDisplay" id = <%= userName %>>',
         '<h4 class="username-display"><%= userName %></h4>',
         '<h3 class="question-display"><%= question %></h3>',
+        '<h3 class="question-display"><%= answer.answer %></h3>',
+        '<button class = "delete-button">DELETE</button>',
+        '<button class = "edit-button">EDIT</button>',
     '</div>'
   ].join(""),
 
-  answerDisplay: [
-    // '<div data-id = <%= userName %>>',
-        '<h4 class="username-display"><%= answer %></h4>',
-    // '</div>'
+  editPost: [
+    "<form class = 'edit-form'>",
+      "<input type='text' class = 'edit-question-input' placeholder = <%= question %>>",
+      "<button class = 'submit-edit-button'>SUBMIT EDIT</button>",
+    "</form>"
   ].join("")
+
 };
