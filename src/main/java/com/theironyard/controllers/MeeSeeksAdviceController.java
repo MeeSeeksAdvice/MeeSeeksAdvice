@@ -89,8 +89,8 @@ public class MeeSeeksAdviceController {
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
-    public Question editQuestion(@RequestBody Question question, Answer answer) {
-        answer.setAnswer("TEST TEXT");
+    public Question editQuestion(@RequestBody Question question) {
+        question.setAnswer(getRandomAnswer());
         questions.save(question);
         return question;
     }
