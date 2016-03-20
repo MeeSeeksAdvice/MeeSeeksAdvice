@@ -65,7 +65,6 @@ public class MeeSeeksAdviceController {
         }
         session.setAttribute("userName", userExsist.getUserName());
         return userExsist;
-
     }
 
     @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
