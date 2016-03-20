@@ -91,7 +91,12 @@ public class MeeSeeksAdviceController {
     public List<Question>getUsersQuestions(@PathVariable("id") int id, HttpSession session) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        return questions.findByUser(user);
+        List<Question> localQuestions = questions.findByUser(user);
+
+        for (Question question : localQuestions) {
+            question.setAnswer(getRandomAnswer());
+        }
+        return localQuestions;
     }
 
     @RequestMapping(path = "/question/{id}", method = RequestMethod.PUT)
