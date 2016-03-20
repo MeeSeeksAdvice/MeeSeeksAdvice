@@ -94,14 +94,18 @@ Server dbui = null;
 
     @RequestMapping(path = "/question/{id}", method = RequestMethod.GET)
     public Question getQuestion(@PathVariable("id") int id) {
-//        Question question = questions.findOne(id);
-//        question.setAnswer(answer());
+        Question question = questions.findOne(id);
+        question.setAnswer(answer());
         return questions.findOne(id);
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.GET)
     public List<Question> getQuestions() {
-        return (List<Question>) questions.findAll();
+        List<Question> localQuestions = (List<Question>) questions.findAll();
+        for (Question question : localQuestions) {
+            question.setAnswer(answer());
+        }
+        return localQuestions;
 
     }
 
