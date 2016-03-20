@@ -14,9 +14,8 @@ module.exports = Backbone.View.extend({
 
   },
   addOne: function (model) {
-    var modelView = new QuestionModelView({model: model});
-    userName = modelView.model.attributes.user.userName;
-    this.$el.prepend(modelView.render().el);
+      var modelView = new QuestionModelView({model: model});
+      this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
     this.$el.html('');
