@@ -13361,9 +13361,8 @@ module.exports = Backbone.View.extend({
 
   },
   addOne: function (model) {
-    var modelView = new QuestionModelView({model: model});
-    userName = modelView.model.attributes.user.userName;
-    this.$el.prepend(modelView.render().el);
+      var modelView = new QuestionModelView({model: model});
+      this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
     this.$el.html('');
@@ -13428,6 +13427,7 @@ module.exports = Backbone.View.extend ({
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
+
     this.$el.html(markup);
     return this;
   },
@@ -13465,17 +13465,17 @@ module.exports = {
 
   questionForm : [
     '<form class="question-form">',
-        "<h3>What's your question for Meseeks?</h3>",
+        "<h3>What's your question for Meeseeks?</h3>",
         '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
         '<button type="submit" name="" class="question-button">Submit</button>',
     '</form>'
   ].join(""),
 
   questionDisplay: [
-    '<div class = "questionDisplay" id = <%= userName %>>',
-        '<h4 class="username-display"><%= userName %></h4>',
+    '<div class = "questionDisplay" >',
+        '<h4 class="username-display"><%= user.userName %></h4>',
         '<h3 class="question-display"><%= question %></h3>',
-        '<h3 class="question-display"><%= answer.answer %></h3>',
+        '<h3 class="answer-display"><%= answer.answer %></h3>',
         '<button class = "delete-button">DELETE</button>',
         '<button class = "edit-button">EDIT</button>',
     '</div>'
