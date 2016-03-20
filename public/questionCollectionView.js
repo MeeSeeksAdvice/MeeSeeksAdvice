@@ -3,7 +3,6 @@ var _ = require('underscore');
 var tmpl = require('./templates');
 var $ = require('jquery');
 var QuestionModelView= require ('./questionModelView');
-var AnswerModelView = require ('./answerModelView');
 
 module.exports = Backbone.View.extend({
   el: '.question-display-container',
@@ -15,11 +14,11 @@ module.exports = Backbone.View.extend({
 
   },
   addOne: function (model) {
-    var modelView = new QuestionModelView({model: model});
-    userName = modelView.model.attributes.user.userName;
-    this.$el.prepend(modelView.render().el);
+      var modelView = new QuestionModelView({model: model});
+      this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
+    this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
   }
 });
