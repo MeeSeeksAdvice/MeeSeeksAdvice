@@ -90,9 +90,9 @@ public class MeeSeeksAdviceController {
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
-    public void editQuestion(@RequestBody Question question) {
+    public Question editQuestion(@RequestBody Question question) {
         questions.save(question);
-
+        return question;
     }
 
     @RequestMapping(path = "/question/{id}", method = RequestMethod.GET)
@@ -109,7 +109,6 @@ public class MeeSeeksAdviceController {
             question.setAnswer(getRandomAnswer());
         }
         return localQuestions;
-
     }
 
     @RequestMapping(path = "/question/{id}", method = RequestMethod.DELETE)
@@ -133,6 +132,5 @@ public class MeeSeeksAdviceController {
             randomNumber = 25;
         }
         return answers.findOne(randomNumber);
-
     }
 }
