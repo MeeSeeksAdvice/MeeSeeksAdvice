@@ -87,6 +87,13 @@ public class MeeSeeksAdviceController {
         return question;
     }
 
+    @RequestMapping(path = "/user/question/{id}", method = RequestMethod.GET)
+    public List<Question>getUsersQuestions(@PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        return questions.findByUser(user);
+    }
+
     @RequestMapping(path = "/question/{id}", method = RequestMethod.PUT)
     public Question editQuestion(@PathVariable("id") int id, @RequestBody Question question) {
         Question persistedQuestion = questions.findOne(id);
