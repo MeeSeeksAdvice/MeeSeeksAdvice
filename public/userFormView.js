@@ -19,7 +19,7 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
-    // this.hide();
+    window.glob = this.model;
   },
   initialize: function () {
     this.model = new UserModel({});
