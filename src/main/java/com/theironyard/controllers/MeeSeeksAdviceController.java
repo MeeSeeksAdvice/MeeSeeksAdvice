@@ -86,11 +86,11 @@ public class MeeSeeksAdviceController {
         question.setUser(user);
         questions.save(question);
         return question;
-
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
-    public Question editQuestion(@RequestBody Question question) {
+    public Question editQuestion(@RequestBody Question question, Answer answer) {
+        answer.setAnswer("TEST TEXT");
         questions.save(question);
         return question;
     }
