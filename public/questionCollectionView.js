@@ -18,7 +18,12 @@ module.exports = Backbone.View.extend({
       this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
-    this.$el.html('');
+    if ($(".modelView").contains(userName)){
+      this.$el.html('');
     _.each(this.collection.models, this.addOne, this);
+    console.log("howdy");
+  },
+
   }
+
 });
