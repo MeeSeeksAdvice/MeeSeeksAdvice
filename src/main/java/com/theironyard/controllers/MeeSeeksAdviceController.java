@@ -123,12 +123,15 @@ public class MeeSeeksAdviceController {
     }
 
     public Answer getRandomAnswer() {
-
+        //http://www.javapractices.com/topic/TopicAction.do?Id=62
         //get the range, casting to long to avoid overflow problems
         long range = (long) 1 - (long) 25 + 1;
         // compute a fraction of the range, 0 <= frac < range
         long fraction = (long) (range * random.nextDouble());
         int randomNumber = (int) (fraction + 1);
+        if(randomNumber > 25){
+            randomNumber = 25;
+        }
         return answers.findOne(randomNumber);
 
     }
