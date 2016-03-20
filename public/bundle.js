@@ -94,15 +94,18 @@ var AnswerSubmitView = require ('./answerSubmitView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
-  var addQuestionForm = new QuestionForm();
   var questioncollection = new QuestionCollection();
   var answersubmitview = new AnswerSubmitView();
   questioncollection.fetch().then(function(data){
+    console.log("QUESTSIONS", data);
+    // if ($('.questionDisplay').attr('id') === userName) {
       var postMarkUp = new QuestionCollectionView({collection : questioncollection});
+      var addQuestionForm = new QuestionForm({collection: questioncollection});
+    // },
     });
   var answercollection = new AnswerCollection();
-  console.log('answer collection = ',answercollection);
   answercollection.fetch().then(function(data){
+      console.log("ANSWERS", data);
       var postMarkUp2 = new AnswerCollectionView({collection : answercollection});
   });
 });
@@ -13446,11 +13449,14 @@ module.exports = Backbone.View.extend({
   initialize: function () {
     this.addAll();
     this.listenTo(this.collection, 'update', this.addAll);
+    this.listenTo(this.collection, 'change', this.addAll);
+    this.listenTo(this.collection, 'add', this.addAll);
+
   },
   addOne: function (model) {
     var modelView = new QuestionModelView({model: model});
     userName = modelView.model.attributes.user.userName;
-    this.$el.append(modelView.render().el);
+    this.$el.prepend(modelView.render().el);
   },
   addAll: function () {
     _.each(this.collection.models, this.addOne, this);
@@ -13469,7 +13475,7 @@ module.exports = Backbone.View.extend ({
   el: '.question-container',
   template: _.template(tmpl.questionForm),
   events: {
-    'click .question-button' : 'submitQuestion'
+    'submit .question-form' : 'submitQuestion'
   },
   submitQuestion: function (event) {
     event.preventDefault();
@@ -13477,6 +13483,7 @@ module.exports = Backbone.View.extend ({
         question: this.$el.find('.question-input').val(),
     });
     this.model.save();
+    this.collection.add(this.model);
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
   },
@@ -13523,7 +13530,7 @@ module.exports = {
   userFormTmpl : [
     '<form class="user-login-form">',
         '<input type="text" name="username" class="user-login-input form-control" placeholder = "Enter Username"value="">',
-        '<button type="button" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
+        '<button type="submit" class ="user-login-button btn btn-default" name="button">SUBMIT</button>',
     '</form>'
   ].join(""),
 
@@ -13531,12 +13538,12 @@ module.exports = {
     '<form class="question-form">',
         "<h3>What's your question for Meseeks?</h3>",
         '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
-        '<button type="button" name="" class = "question-button">Submit</button>',
+        '<button type="submit" name="" class="question-button">Submit</button>',
     '</form>'
   ].join(""),
 
   questionDisplay: [
-    '<div id = <%= userName %>>',
+    '<div class = "questionDisplay" id = <%= userName %>>',
         '<h4 class="username-display"><%= userName %></h4>',
         '<h3 class="question-display"><%= question %></h3>',
     '</div>'
@@ -13560,7 +13567,7 @@ module.exports = Backbone.View.extend({
   el: '.login-container',
   template: _.template(tmpl.userFormTmpl),
   events: {
-    'click .user-login-button' : 'submitUsername'
+    'submit .user-login-form' : 'submitUsername'
   },
   submitUsername: function (event) {
     event.preventDefault();

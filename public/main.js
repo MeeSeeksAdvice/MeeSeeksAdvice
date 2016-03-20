@@ -10,15 +10,18 @@ var AnswerSubmitView = require ('./answerSubmitView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
-  var addQuestionForm = new QuestionForm();
   var questioncollection = new QuestionCollection();
   var answersubmitview = new AnswerSubmitView();
   questioncollection.fetch().then(function(data){
+    console.log("QUESTSIONS", data);
+    // if ($('.questionDisplay').attr('id') === userName) {
       var postMarkUp = new QuestionCollectionView({collection : questioncollection});
+      var addQuestionForm = new QuestionForm({collection: questioncollection});
+    // },
     });
   var answercollection = new AnswerCollection();
-  console.log('answer collection = ',answercollection);
   answercollection.fetch().then(function(data){
+      console.log("ANSWERS", data);
       var postMarkUp2 = new AnswerCollectionView({collection : answercollection});
   });
 });
