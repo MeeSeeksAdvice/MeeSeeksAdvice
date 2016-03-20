@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -31,7 +32,9 @@ public class MeeSeeksAdviceController {
     @Autowired
     AnswerRepository answers;
 
-Server dbui = null;
+    public static Random random = new Random();
+
+    Server dbui = null;
 
     @PostConstruct
     public void init() throws SQLException, FileNotFoundException {
@@ -95,7 +98,7 @@ Server dbui = null;
     @RequestMapping(path = "/question/{id}", method = RequestMethod.GET)
     public Question getQuestion(@PathVariable("id") int id) {
         Question question = questions.findOne(id);
-        question.setAnswer(answer());
+        question.setAnswer(getRandomAnswer());
         return questions.findOne(id);
     }
 
@@ -103,7 +106,7 @@ Server dbui = null;
     public List<Question> getQuestions() {
         List<Question> localQuestions = (List<Question>) questions.findAll();
         for (Question question : localQuestions) {
-            question.setAnswer(answer());
+            question.setAnswer(getRandomAnswer());
         }
         return localQuestions;
 
@@ -119,60 +122,14 @@ Server dbui = null;
         session.invalidate();
     }
 
-    @RequestMapping(path = "/answer", method = RequestMethod.GET)
-    public Answer answer() {
-        double random = Math.random() * 101;
+    public Answer getRandomAnswer() {
 
-        if (random <= 4) {
-            return answers.findOne(1);
-        } else if (random <= 5 && random >= 8) {
-            return answers.findOne(2);
-        } else if (random <= 9 && random >= 12) {
-            return answers.findOne(3);
-        } else if (random <= 13 && random >= 16) {
-            return answers.findOne(4);
-        } else if (random <= 17 && random >= 20) {
-            return answers.findOne(5);
-        } else if (random <= 21 && random >= 24) {
-            return answers.findOne(6);
-        } else if (random <= 25 && random >= 28) {
-            return answers.findOne(7);
-        } else if (random <= 29 && random >= 32) {
-            return answers.findOne(8);
-        } else if (random <= 33 && random >= 36) {
-            return answers.findOne(9);
-        } else if (random <= 37 && random >= 40) {
-            return answers.findOne(10);
-        } else if (random <= 41 && random >= 44) {
-            return answers.findOne(11);
-        } else if (random <= 45 && random >= 48) {
-            return answers.findOne(12);
-        } else if (random <= 49 && random >= 52) {
-            return answers.findOne(13);
-        } else if (random <= 53 && random >= 56) {
-            return answers.findOne(14);
-        } else if (random <= 57 && random >= 60) {
-            return answers.findOne(15);
-        } else if (random <= 61 && random >= 64) {
-            return answers.findOne(16);
-        } else if (random <= 65 && random >= 68) {
-            return answers.findOne(17);
-        } else if (random <= 69 && random >= 72) {
-            return answers.findOne(18);
-        } else if (random <= 73 && random >= 76) {
-            return answers.findOne(19);
-        } else if (random <= 77 && random >= 80) {
-            return answers.findOne(20);
-        } else if (random <= 81 && random >= 84) {
-            return answers.findOne(21);
-        } else if (random <= 85 && random >= 88) {
-            return answers.findOne(22);
-        } else if (random <= 89 && random >= 92) {
-            return answers.findOne(23);
-        } else if (random <= 93 && random >= 96) {
-            return answers.findOne(24);
-        } else {
-            return answers.findOne(25);
-        }
+        //get the range, casting to long to avoid overflow problems
+        long range = (long) 1 - (long) 25 + 1;
+        // compute a fraction of the range, 0 <= frac < range
+        long fraction = (long) (range * random.nextDouble());
+        int randomNumber = (int) (fraction + 1);
+        return answers.findOne(randomNumber);
+
     }
 }
