@@ -86,7 +86,6 @@ public class MeeSeeksAdviceController {
         question.setUser(user);
         questions.save(question);
         return question;
-
     }
 
     @RequestMapping(path = "/question", method = RequestMethod.PUT)
