@@ -12,8 +12,9 @@ public class Answer {
     @GeneratedValue
     int id;
 
-    @Column
+    @Column(nullable = false)
     String answer;
+
 
     public Answer() {
     }
@@ -37,4 +38,5 @@ public class Answer {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
+
 }
