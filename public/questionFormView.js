@@ -17,7 +17,6 @@ module.exports = Backbone.View.extend ({
 
     });
     this.model.save();
-    window.glob = this.model;
     this.collection.add(this.model);
     this.model = new QuestionModel({});
     this.$el.find('input').val('');

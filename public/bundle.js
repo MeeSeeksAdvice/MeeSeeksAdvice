@@ -13354,7 +13354,7 @@ module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
     this.addAll();
-  
+
     this.listenTo(this.collection, 'update', this.addAll);
     this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'add', this.addAll);
@@ -13392,7 +13392,6 @@ module.exports = Backbone.View.extend ({
 
     });
     this.model.save();
-    window.glob = this.model;
     this.collection.add(this.model);
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
@@ -13516,7 +13515,7 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
-    // this.hide();
+    window.glob = this.model;
   },
   initialize: function () {
     this.model = new UserModel({});
