@@ -87,9 +87,10 @@ public class MeeSeeksAdviceController {
         return question;
     }
 
-    @RequestMapping(path = "/question", method = RequestMethod.PUT)
-    public Question editQuestion(@RequestBody Question question) {
-        question.setAnswer(getRandomAnswer());
+    @RequestMapping(path = "/question/{id}", method = RequestMethod.PUT)
+    public Question editQuestion(@PathVariable("id") int id, @RequestBody Question question) {
+        Question persistedQuestion = questions.findOne(id);
+        persistedQuestion = question;
         questions.save(question);
         return question;
     }
