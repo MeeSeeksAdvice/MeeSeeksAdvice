@@ -114,6 +114,14 @@ public class MeeSeeksAdviceController {
         return questions.findOne(id);
     }
 
+    @RequestMapping(path = "/user/question/{id}", method = RequestMethod.PUT)
+    public Question editUserQuestion(@PathVariable("id") int id, @RequestBody Question question) {
+        Question persistedQuestion = questions.findOne(id);
+        persistedQuestion = question;
+        questions.save(question);
+        return question;
+    }
+
     @RequestMapping(path = "/question", method = RequestMethod.GET)
     public List<Question> getQuestions() {
         List<Question> localQuestions = (List<Question>) questions.findAll();
@@ -129,10 +137,7 @@ public class MeeSeeksAdviceController {
     }
 
     @RequestMapping(path = "/user/question/{id}", method = RequestMethod.DELETE)
-    public void deleteUserQuestion(@PathVariable("id") int id, HttpSession session) {
-        String userName = (String) session.getAttribute("userName");
-        User user = users.findByUserName(userName);
-        user.getId();
+    public void deleteUserQuestion(@PathVariable("id") int id) {
         questions.delete(id);
     }
 
