@@ -8,7 +8,6 @@ module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
     this.addAll();
-
     this.listenTo(this.collection, 'update', this.addAll);
     this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'add', this.addAll);
