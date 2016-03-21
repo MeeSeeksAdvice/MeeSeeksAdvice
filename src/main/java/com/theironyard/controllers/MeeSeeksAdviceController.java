@@ -88,7 +88,7 @@ public class MeeSeeksAdviceController {
     }
 
     @RequestMapping(path = "/user/question/{id}", method = RequestMethod.GET)
-    public List<Question>getUsersQuestions(@PathVariable("id") int id, HttpSession session) {
+    public List<Question> getUsersQuestions(@PathVariable("id") int id, HttpSession session) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
         List<Question> localQuestions = questions.findByUser(user);
@@ -128,6 +128,14 @@ public class MeeSeeksAdviceController {
         questions.delete(id);
     }
 
+    @RequestMapping(path = "/user/question/{id}", method = RequestMethod.DELETE)
+    public void deleteUserQuestions(@PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        user.setId(id);
+        questions.delete(id);
+    }
+
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public void logout(HttpSession session) {
         session.invalidate();
@@ -140,7 +148,7 @@ public class MeeSeeksAdviceController {
         // compute a fraction of the range, 0 <= frac < range
         long fraction = (long) (range * random.nextDouble());
         int randomNumber = (int) (fraction + 1);
-        if(randomNumber > 25){
+        if (randomNumber > 25) {
             randomNumber = 25;
         }
         return answers.findOne(randomNumber);
