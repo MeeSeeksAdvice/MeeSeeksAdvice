@@ -3,6 +3,9 @@ var tmpl = require('./templates');
 var _ = require('underscore');
 var $ = require ('jquery');
 var UserModel = require ('./userModel');
+var QuestionCollection = require ('./questionCollection');
+var QuestionCollectionView = require ('./questionCollectionView');
+var QuestionForm = require ('./questionFormView');
 
 module.exports = Backbone.View.extend({
   el: '.login-container',
@@ -19,7 +22,13 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
-    window.glob = this.model;
+    var questioncollection = new QuestionCollection();
+    questioncollection.fetch().then(function(data){
+      console.log("QUESTSIONS", data);
+        var postMarkUp = new QuestionCollectionView({collection : questioncollection});
+        var addQuestionForm = new QuestionForm({collection: questioncollection});
+      // }
+      });
   },
   initialize: function () {
     this.model = new UserModel({});
