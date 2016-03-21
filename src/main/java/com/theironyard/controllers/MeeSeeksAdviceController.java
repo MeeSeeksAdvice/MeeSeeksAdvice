@@ -136,9 +136,10 @@ public class MeeSeeksAdviceController {
         questions.delete(id);
     }
 
-    @RequestMapping(path = "/user/question{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/user/question/{id}", method = RequestMethod.DELETE)
     public void deleteUserQuestion(@PathVariable("id") int id) {
         questions.delete(id);
+
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
