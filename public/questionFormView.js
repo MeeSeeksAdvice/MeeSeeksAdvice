@@ -19,7 +19,10 @@ module.exports = Backbone.View.extend ({
 
     });
     this.model.save();
-    this.collection.add(this.model);
+    this.collection.fetch().success(function (data) {
+
+   console.log('we are fetching and done');
+ });
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
   },

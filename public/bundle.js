@@ -13356,7 +13356,6 @@ module.exports = Backbone.View.extend({
   el: '.question-display-container',
   initialize: function () {
     this.addAll();
-
     this.listenTo(this.collection, 'update', this.addAll);
     this.listenTo(this.collection, 'change', this.addAll);
     this.listenTo(this.collection, 'add', this.addAll);
@@ -13396,7 +13395,10 @@ module.exports = Backbone.View.extend ({
 
     });
     this.model.save();
-    this.collection.add(this.model);
+    this.collection.fetch().success(function (data) {
+
+   console.log('we are fetching and done');
+ });
     this.model = new QuestionModel({});
     this.$el.find('input').val('');
   },
@@ -13453,7 +13455,9 @@ module.exports = Backbone.View.extend ({
   },
   deletePost: function (event) {
     event.preventDefault();
-    this.model.destroy();
+    console.log('model: ', this.model);
+    this.model.destroy({url: '/question/' + this.model.toJSON().id });
+
   },
   toggleEdit: function (event) {
     event.preventDefault();
@@ -13461,11 +13465,10 @@ module.exports = Backbone.View.extend ({
   },
   editPost: function (event) {
     event.preventDefault();
-    console.log("submit edit button working!");
     this.model.set({
       question: this.$el.find('.edit-question-input').val(),
     });
-    this.model.save();
+    this.model.save({url: '/question/' + this.model.toJSON().id });
   }
 });
 
@@ -13490,9 +13493,9 @@ module.exports = {
 
   questionDisplay: [
     '<section class = "questionDisplay" id = <%= user.userName %> =  >',
-        '<h4 class="username-display"><%= user.userName %></h4>',
+        '<h4 class="username-display"><%= user.userName %>:</h4>',
         '<h3 class="question-display"><%= question %></h3>',
-        '<h3 class="answer-display"><%= answer.answer %></h3>',
+        '<h3 class="answer-display"> <%= answer.answer %></h3>',
         '<button class = "delete-button">DELETE</button>',
         '<button class = "edit-button">EDIT</button>',
     '</section>'

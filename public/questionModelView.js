@@ -22,7 +22,9 @@ module.exports = Backbone.View.extend ({
   },
   deletePost: function (event) {
     event.preventDefault();
-    this.model.destroy();
+    console.log('model: ', this.model);
+    this.model.destroy({url: '/question/' + this.model.toJSON().id });
+
   },
   toggleEdit: function (event) {
     event.preventDefault();
@@ -30,10 +32,9 @@ module.exports = Backbone.View.extend ({
   },
   editPost: function (event) {
     event.preventDefault();
-    console.log("submit edit button working!");
     this.model.set({
       question: this.$el.find('.edit-question-input').val(),
     });
-    this.model.save();
+    this.model.save({url: '/question/' + this.model.toJSON().id });
   }
 });
