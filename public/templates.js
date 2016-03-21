@@ -20,7 +20,8 @@ module.exports = {
     '<section class = "questionDisplay" id = <%= user.userName %> =  >',
         '<h4 class="username-display"><%= user.userName %>:</h4>',
         '<h3 class="question-display"><%= question %></h3>',
-        '<h3 class="answer-display"> <%= answer.answer %></h3>',
+
+        '<h3 class="answer-display"> <span class = meeseeks-answer> Meeseeks: </span><%= answer.answer %></h3>',
         '<button class = "delete-button">DELETE</button>',
         '<button class = "edit-button">EDIT</button>',
     '</section>'
