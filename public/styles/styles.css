@@ -1,6 +1,6 @@
 body {
   background-image: url("../images/meeseeks.png");
-  background-position-x: 163%;
+  background-position-x: 463px;
   background-repeat: no-repeat;
   font-family: 'Montserrat', sans-serif; }
 
@@ -53,14 +53,22 @@ body {
   .advice-page button {
     border-radius: 5px; }
 
-button:last-child {
-  margin-left: 9%; }
+.meeseeks-answer {
+  display: inline-block;
+  text-transform: uppercase;
+  color: lightgrey;
+  margin-right: 10px;
+  font-size: 18px; }
 
 .question-form {
-  margin-top: 25%; }
+  margin-top: 10%; }
   .question-form h3 {
     font-size: 2.7em;
     color: #FF9933; }
+
+.questionDisplay {
+  border-bottom: 1px solid lightgrey;
+  padding-bottom: 27px; }
 
 .question-display-container {
   text-align: left;
