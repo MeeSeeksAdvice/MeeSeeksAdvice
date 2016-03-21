@@ -132,7 +132,7 @@ public class MeeSeeksAdviceController {
     public void deleteUserQuestions(@PathVariable("id") int id, HttpSession session) {
         String userName = (String) session.getAttribute("userName");
         User user = users.findByUserName(userName);
-        user.setId(id);
+        user.getId();
         questions.delete(id);
     }
 
