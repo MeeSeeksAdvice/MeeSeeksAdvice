@@ -9,7 +9,7 @@ module.exports = {
   questionForm : [
     '<form class="question-form">',
         "<h3>What's your question for Mr. Meeseeks?</h3>",
-        '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
+        '<input type="text" name="" class ="question-input" value="" placeholder = "Ask Mr. Meeseeks a question">',
         '<button type="submit" name="" class="question-button">Submit</button>',
     '</form>'
   ].join(""),
