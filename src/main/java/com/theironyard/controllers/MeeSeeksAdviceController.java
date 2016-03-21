@@ -137,8 +137,11 @@ public class MeeSeeksAdviceController {
     }
 
     @RequestMapping(path = "/user/question/{id}", method = RequestMethod.DELETE)
-    public void deleteUserQuestion(@PathVariable("id") int id) {
-        questions.delete(id);
+    public User deleteUserQuestion(@PathVariable("id") int id, HttpSession session) {
+        String userName = (String) session.getAttribute("userName");
+        User user = users.findByUserName(userName);
+        users.delete(user.getId());
+        return null;
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
