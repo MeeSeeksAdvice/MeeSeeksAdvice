@@ -1,5 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Backbone = require('backbone');
+module.exports = Backbone.Model.extend({
+  urlRoot: '/logout',
+  initialize: function () {
+  }
+});
+
+},{"backbone":3}],2:[function(require,module,exports){
+var Backbone = require('backbone');
 var $ = require ('jquery');
 var UserFormView = require ('./userFormView');
 var QuestionForm = require ('./questionFormView');
@@ -8,16 +16,10 @@ var QuestionCollectionView = require ('./questionCollectionView');
 
 $(document).ready(function () {
   var addUserForm = new UserFormView();
-  var questioncollection = new QuestionCollection();
-  questioncollection.fetch().then(function(data){
-    console.log("QUESTSIONS", data);
-      var postMarkUp = new QuestionCollectionView({collection : questioncollection});
-      var addQuestionForm = new QuestionForm({collection: questioncollection});
-    // }
-    });
+  
 });
 
-},{"./questionCollection":5,"./questionCollectionView":6,"./questionFormView":7,"./userFormView":11,"backbone":2,"jquery":3}],2:[function(require,module,exports){
+},{"./questionCollection":6,"./questionCollectionView":7,"./questionFormView":8,"./userFormView":12,"backbone":3,"jquery":4}],3:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.3.2
 
@@ -1941,7 +1943,7 @@ $(document).ready(function () {
 });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":3,"underscore":4}],3:[function(require,module,exports){
+},{"jquery":4,"underscore":5}],4:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.2.2
  * http://jquery.com/
@@ -11785,7 +11787,7 @@ if ( !noGlobal ) {
 return jQuery;
 }));
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -13335,15 +13337,15 @@ return jQuery;
   }
 }.call(this));
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var Backbone = require ('backbone');
 module.exports = Backbone.Collection.extend ({
-  url: '/question',
+  url: '/user/question/1',
   initialize: function () {
   }
 });
 
-},{"backbone":2}],6:[function(require,module,exports){
+},{"backbone":3}],7:[function(require,module,exports){
 var Backbone = require ('backbone');
 var _ = require('underscore');
 var tmpl = require('./templates');
@@ -13372,18 +13374,20 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"./questionModelView":9,"./templates":10,"backbone":2,"jquery":3,"underscore":4}],7:[function(require,module,exports){
+},{"./questionModelView":10,"./templates":11,"backbone":3,"jquery":4,"underscore":5}],8:[function(require,module,exports){
 var Backbone = require ('backbone');
 var tmpl = require ('./templates');
 var _ = require ('underscore');
 var $ = require ('jquery');
 var QuestionModel = require ('./questionModel');
+var LogoutModel = require ('./logoutModel');
 
 module.exports = Backbone.View.extend ({
   el: '.question-container',
   template: _.template(tmpl.questionForm),
   events: {
-    'submit .question-form' : 'submitQuestion'
+    'submit .question-form' : 'submitQuestion',
+    'click .logout-button' : 'logoutUser'
   },
   submitQuestion: function (event) {
     event.preventDefault();
@@ -13404,10 +13408,18 @@ module.exports = Backbone.View.extend ({
     var markup = this.template(this.model.toJSON());
     this.$el.html(markup);
     return this;
-  }
+  },
+  logoutUser: function() {
+    event.preventDefault();
+    console.log("CLICKY LOGOUT");
+    var logout = new LogoutModel();
+    $('.login-in-page').removeClass('inactive');
+    $('.advice-page').addClass('inactive');
+    location.reload(true);
+  },
 });
 
-},{"./questionModel":8,"./templates":10,"backbone":2,"jquery":3,"underscore":4}],8:[function(require,module,exports){
+},{"./logoutModel":1,"./questionModel":9,"./templates":11,"backbone":3,"jquery":4,"underscore":5}],9:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend ({
   urlRoot: '/question',
@@ -13416,7 +13428,7 @@ module.exports = Backbone.Model.extend ({
   }
 });
 
-},{"backbone":2}],9:[function(require,module,exports){
+},{"backbone":3}],10:[function(require,module,exports){
 var Backbone = require ('backbone');
 var _ = require ('underscore');
 var tmpl = require('./templates');
@@ -13457,7 +13469,7 @@ module.exports = Backbone.View.extend ({
   }
 });
 
-},{"./templates":10,"backbone":2,"underscore":4}],10:[function(require,module,exports){
+},{"./templates":11,"backbone":3,"underscore":5}],11:[function(require,module,exports){
 module.exports = {
   userFormTmpl : [
     '<form class="user-login-form">',
@@ -13469,8 +13481,10 @@ module.exports = {
   questionForm : [
     '<form class="question-form">',
         "<h3>What's your question for Mr. Meeseeks?</h3>",
-        '<input type="text" name="" class ="question-input" value="" placeholder = "Enter Question">',
+        '<input type="text" name="" class ="question-input" value="" placeholder = "Ask Mr. Meeseeks a question">',
         '<button type="submit" name="" class="question-button">Submit</button>',
+        '<button name="" class="logout-button">Logout</button>',
+
     '</form>'
   ].join(""),
 
@@ -13493,12 +13507,15 @@ module.exports = {
 
 };
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var Backbone = require('backbone');
 var tmpl = require('./templates');
 var _ = require('underscore');
 var $ = require ('jquery');
 var UserModel = require ('./userModel');
+var QuestionCollection = require ('./questionCollection');
+var QuestionCollectionView = require ('./questionCollectionView');
+var QuestionForm = require ('./questionFormView');
 
 module.exports = Backbone.View.extend({
   el: '.login-container',
@@ -13515,7 +13532,13 @@ module.exports = Backbone.View.extend({
     this.model = new UserModel ({});
     $('.login-in-page').addClass('inactive');
     $('.advice-page').removeClass('inactive');
-    window.glob = this.model;
+    var questioncollection = new QuestionCollection();
+    questioncollection.fetch().then(function(data){
+      console.log("QUESTSIONS", data);
+        var postMarkUp = new QuestionCollectionView({collection : questioncollection});
+        var addQuestionForm = new QuestionForm({collection: questioncollection});
+      // }
+      });
   },
   initialize: function () {
     this.model = new UserModel({});
@@ -13534,7 +13557,7 @@ module.exports = Backbone.View.extend({
 
 });
 
-},{"./templates":10,"./userModel":12,"backbone":2,"jquery":3,"underscore":4}],12:[function(require,module,exports){
+},{"./questionCollection":6,"./questionCollectionView":7,"./questionFormView":8,"./templates":11,"./userModel":13,"backbone":3,"jquery":4,"underscore":5}],13:[function(require,module,exports){
 var Backbone = require('backbone');
 module.exports = Backbone.Model.extend({
   urlRoot: '/user',
@@ -13542,4 +13565,4 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone":2}]},{},[1]);
+},{"backbone":3}]},{},[2]);
