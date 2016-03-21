@@ -49,24 +49,31 @@ background-repeat: no-repeat;
 }
 
 .advice-page{
+  margin-top: 10%;
   width: 65%;
   margin: 0 auto;
   text-align: center;
   input{
-    width:70%;
+    width:65%;
     height:40px;
     border-radius: 5px;
   }
   .question-button{
     height:40px;
     width:10%;
+    background-color: #FFffff;
   }
   button{
     border-radius: 5px;
   }
 }
 
+button:last-child{
+margin-left: 9%;
+}
+
 .question-form{
+  margin-top: 25%;
   h3{
     font-size: 2.7em;
     color: #FF9933;
@@ -77,4 +84,13 @@ background-repeat: no-repeat;
   text-align: left;
   width:82%;
   margin-left: 10%;
+  button{
+    background-color: #ffffff;
+  }
+}
+
+.logout-button{
+  height:40px;
+  width:10%;
+  background-color: #FF9933;
 }
