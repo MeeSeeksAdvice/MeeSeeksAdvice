@@ -38,24 +38,38 @@ body {
   display: inline-block; }
 
 .advice-page {
+  margin-top: 10%;
   width: 65%;
   margin: 0 auto;
   text-align: center; }
   .advice-page input {
-    width: 70%;
+    width: 65%;
     height: 40px;
     border-radius: 5px; }
   .advice-page .question-button {
     height: 40px;
-    width: 10%; }
+    width: 10%;
+    background-color: #FFffff; }
   .advice-page button {
     border-radius: 5px; }
 
-.question-form h3 {
-  font-size: 2.7em;
-  color: #FF9933; }
+button:last-child {
+  margin-left: 9%; }
+
+.question-form {
+  margin-top: 25%; }
+  .question-form h3 {
+    font-size: 2.7em;
+    color: #FF9933; }
 
 .question-display-container {
   text-align: left;
   width: 82%;
   margin-left: 10%; }
+  .question-display-container button {
+    background-color: #ffffff; }
+
+.logout-button {
+  height: 40px;
+  width: 10%;
+  background-color: #FF9933; }
